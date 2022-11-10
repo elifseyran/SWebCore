@@ -1,0 +1,26 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.section px-2 px-lg-4 pt-5.portfolio-item {
+    width: 100px;
+    height: 100px;
+    float: right;
+    border-radius: 10px;
+    margin: 10px;
+    margin-bottom: 5px;
+}

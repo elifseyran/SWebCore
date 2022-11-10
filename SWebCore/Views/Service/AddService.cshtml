@@ -1,0 +1,35 @@
+﻿@model EntityLayer.Concrete.Service
+@{
+    ViewData["Title"] = "AddService";
+    Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
+}
+@*C:\Users\Yeliz\Desktop\MuratYücedağ\SWebCore\SWebCore\wwwroot\Template\images\services\full-stack.svg*@
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            @using (Html.BeginForm("AddService", "Service", null, FormMethod.Post, false, new { enctype = "multipart/form-data", @class = "forms-sample" }))
+            {
+
+                <p class="card-description"> Hizmet Ekleme Paneli </p>
+                <form id="addService" class="forms-sample">
+                    <br />
+                    @Html.Label("Hizmet Başlığı")
+                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                    <br />
+                    <label>Resim Yolu</label>
+                    <input type="file" name="picture" />
+                    @foreach (var item in ViewBag.Images as List<string>)
+                    {
+                        <object type="image/svg+xml" data="~/@item"> </object>
+
+                    }
+                    <br />
+                    <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
+                    @*<a asp-action="Index" asp-controller="Service" class="btn btn-dark">Kaydet</a>*@
+                    <a asp-action="Index" asp-controller="Service" class="btn btn-dark">İptal</a>
+                </form>
+
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@using EntityLayer.Concrete
+@model List<Experience>
+
+<div class="section px-3 px-lg-4 pt-5" id="experience">
+  <div class="container-narrow">
+    <div class="text-center mb-5">
+      <h2 class="marker marker-center">Deneyimlerim</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+          @foreach(var item in Model)
+       {
+       @* <div class="card mb-3" data-aos="fade-right" data-aos-delay="100">
+          <div class="card-header px-3 py-2">
+            <div class="d-flex justify-content-between">
+                <h3 class="h5 mb-1">@item.CompanyName</h3>
+                <div class="text-muted text-small">@item.Position</div>
+                <div class="text-muted text-small">@item.StartingDate</div>
+                <div class="text-muted text-small">@item.EndDate</div>
+                <div class="h5 mb-1">@item.CompanySector</div>
+            </div>
+          </div>
+          <div class="card-body px-3 py-2">
+            <p>@item.BusinessArea</p>
+          </div>
+        </div>*@
+         <div class="card mb-3" data-aos="fade-right" data-aos-delay="100">
+          <div class="card-header px-3 py-2">
+            <div class="d-flex justify-content-between">
+                <div class="col-md-2"> 
+                 <div class="form-group">
+                        <label class="h5 mb-2">Firma Adı</label>
+                        <div class="mb-2">@item.CompanyName</div>
+                    </div>
+                </div>
+                <div class="col-md-2"> 
+                    <div class="form-group">
+                        <label class="h5 mb-2">Pozisyon</label>
+                        <div class="text-muted text-small">@item.Position</div>
+                    </div>
+                </div>
+                <div class="col-md-2"> 
+                    <div class="form-group">
+                        <label class="h5 mb-2">Başlama Tarihi</label>
+                         <div class="text-muted text-small">@(item.StartingDate.HasValue ? item.StartingDate.Value.Date.ToString("dd MMM yyyy") : null)</div>
+                    </div>
+                </div>
+                <div class="col-md-2"> 
+                    <div class="form-group">
+                        <label class="h5 mb-2">Bitiş Tarihi</label>
+                        <div class="text-muted text-small">@(item.EndDate.HasValue ? item.EndDate.Value.Date.ToString("dd MMM yyyy") : null)</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="h5 mb-2">Firma Sektörü</label>
+                        <div class="mb-2">@item.CompanySector</div>
+                    </div>
+                </div>
+                <br>
+                <br/>
+                <br/>
+                <br/>
+                
+            </div>
+            <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="h5 mb-2">İş Alanı</label>
+                       <p>@item.BusinessArea</p>
+                    </div>
+                </div>
+          </div>
+          </div>
+       }
+
+      </div>
+    </div>
+  </div>
+</div>
+

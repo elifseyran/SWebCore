@@ -1,0 +1,82 @@
+﻿@using EntityLayer.Concrete
+@model List<Portfolio>
+<div>
+@*<div class="section px-2 px-lg-4 pt-5" id="portfolio">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="marker marker-center">Projelerim </h2>
+    </div>
+    <div class="grid bp-gallery pb-3" data-aos="zoom-in-up" data-aos-delay="100"style="width: 200px; height: 200px;  float: right;border-radius: 10px; margin: 10px; margin-bottom: 5px; ">
+      <div class="grid-sizer"></div>
+      @foreach(var item in Model)
+      {
+
+      <div class="grid-item"><a href="https://dribbble.com">
+          <figure class="portfolio-item">
+              <img src="@item.ImageUrl"/>
+            <figcaption>
+              <h4 class="h5 mb-0">@item.Name</h4>
+              <div>@item.ProjectUrl</div>
+              <br>
+            </figcaption>
+          </figure>
+          </a>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<div style="width: 200px; height: 200px;  float: right;border-radius: 10px; margin: 10px; margin-bottom: 5px; "></div>
+*@
+</div>
+
+<div class="section px-3 px-lg-4 pt-5" id="portfolio">
+    <div class="container-narrow">
+        <div class="text-center mb-5">
+            <h2 class="marker marker-center">Projelerim</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var item in Model)
+                {
+                    <div class="card mb-3" data-aos="fade-right" data-aos-delay="100">
+                        <div class="card-header px-3 py-2">
+                            <div class="d-flex justify-content-between">
+
+                               <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="h6 mb-2">Proje Adı</label>
+                                        <div class="text-muted text-small">@item.Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="h6 mb-2">Açıklama</label>
+                                        <div class="text-muted text-small">@item.Description</div>
+                                    </div>
+                                </div>
+                                <div class="grid-item">
+                                    <a href="@*https://dribbble.com*@ ">
+
+                                       <figure class="portfolio-item">
+                                            <div class="d-flex flex-row-reverse bg-secondary" style="width: 150px; height: 150px; border-radius: 10px; margin: 10px; margin-bottom: 5px; ">
+                                            <img src="@item.ImageUrl" />
+                                            </div>
+                                            <figcaption>
+                                                <div>@item.ProjectUrl</div>
+                                                <br>
+                                            </figcaption>
+                                        </figure>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
