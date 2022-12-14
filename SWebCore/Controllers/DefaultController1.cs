@@ -1,4 +1,5 @@
 ﻿
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -12,8 +13,20 @@ namespace SWebCore.Controllers
 {
     public class DefaultController1 : Controller
     {
+        
+
+        
         public IActionResult Index()
         {
+            return View(); 
+        }
+        [HttpPost]
+        public IActionResult Index(Message message)
+        {
+            MessageManager messageManager = new MessageManager(new EfMessageDal());
+            message.Date = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+            message.Status = true;
+            messageManager.TAdd(message);
             return View();
         }
         public PartialViewResult HeaderPartial()

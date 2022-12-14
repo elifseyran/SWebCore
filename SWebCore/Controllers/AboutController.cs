@@ -10,9 +10,9 @@ namespace SWebCore.Controllers
     {
         AboutManager aboutManager = new AboutManager(new EfAboutDal());
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(About about)
         {
-            var values = aboutManager.TGetByID(1);
+            var values = aboutManager.TGetByID(5);
             return View(values);
         }
 
@@ -20,10 +20,41 @@ namespace SWebCore.Controllers
 
         public async Task<IActionResult> Index(About about, [Bind("picture")] IFormFile picture)
         {
-            string path = await AddAsync(picture);
+            if (about.Age is null)
+            {
+                
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(about);
+            }
+            if (about.Age >= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(about);
+            }
+            if (((DateTime.Now - about.Age).Value.Days / 365) > 150)
+            {
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(about);
+
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                string path =about.ImageUrl;
+            if(picture != null)
+            {
+                path = await AddAsync(picture);
+            }
             about.ImageUrl = path;
             aboutManager.TUpdate(about);
-            return RedirectToAction("Index", "About");
+          
+          
+                return RedirectToAction("Index", "About");
+            }
+            ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+            return View(about);
+            
         }
 
         [NonAction]
@@ -31,8 +62,8 @@ namespace SWebCore.Controllers
         {
             string filePath = null;
 
-            
-            if (file.Length > 0 )
+
+            if (file.Length > 0)
             {
                 string[] permittedExtensions = { ".png", ".jpg" };
 
@@ -52,6 +83,8 @@ namespace SWebCore.Controllers
                     }
                 }
             }
+                
+            
             return filePath;
         }
     }

@@ -1,7 +1,13 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SWebCore.Controllers
 {
@@ -16,17 +22,65 @@ namespace SWebCore.Controllers
         [HttpGet]
         public IActionResult AddExperience()
         {
-            return View();  
+            return View();
         }
         [HttpPost]
         public IActionResult AddExperience(Experience experience)
         {
-            experienceManager.TAdd(experience);
-            return RedirectToAction("Index");
+           
+            if (experience.StartingDate is null)
+            {
+
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(experience);
+            }
+            if (experience.StartingDate >= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(experience);
+            }
+            if (experience.EndDate <= experience.StartingDate)
+            {
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(experience);
+            }
+            if (experience.EndDate >= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                return View(experience);
+            }
+
+
+            try
+            {
+                ExperienceValidator validation = new ExperienceValidator();
+                ValidationResult results = validation.Validate(experience);
+                if (results.IsValid)
+                {
+                    experienceManager.TAdd(experience);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var item in results.Errors)
+                    {
+                        ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+                return View(experience);
+
+           
+
         }
         public IActionResult DeleteExperience(int id)
         {
-            var values=experienceManager.TGetByID(id);
+            var values = experienceManager.TGetByID(id);
             experienceManager.TDelete(values);
             return RedirectToAction("Index");
         }
@@ -39,8 +93,52 @@ namespace SWebCore.Controllers
         [HttpPost]
         public IActionResult EditExperience(Experience experience)
         {
-            experienceManager.TUpdate(experience);
-            return RedirectToAction("Index");
+            //experienceManager.TUpdate(experience);
+            //return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                ExperienceValidator validations = new ExperienceValidator();
+                ValidationResult results = validations.Validate(experience);
+                if (results.IsValid)
+                {
+                    if (experience.StartingDate is null)
+                    {
+
+                        ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                        return View(experience);
+                    }
+                    if (experience.StartingDate >= experience.EndDate)
+                    {
+                        ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                        return View(experience);
+                    }
+                    if (experience.EndDate >= DateTime.Now)
+                    {
+                        ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                        return View(experience);
+                    }
+                    if (experience.EndDate <= experience.StartingDate)
+                    {
+                        ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                        return View(experience);
+                    }
+                    experienceManager.TUpdate(experience);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var item in results.Errors)
+                    {
+                        ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    }
+                }
+                ModelState.AddModelError("", "Lütfen girilen değerleri kontrol ediniz.");
+                //return View(experience);
+            }
+
+            return View(experience);
         }
     }
 }
+

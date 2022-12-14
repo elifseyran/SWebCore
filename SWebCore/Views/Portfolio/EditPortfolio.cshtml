@@ -7,10 +7,10 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            @using (Html.BeginForm("EditPortfolio", "Portfolio", FormMethod.Post))
+            @using (Html.BeginForm("EditPortfolio", "Portfolio", null, FormMethod.Post, false, new { enctype = "multipart/form-data", @class = "forms-sample" }))
             {
 
-                <p class="card-description"> Proje Düzenleme Paneli </p>
+                <h4 class="card-title"> Proje Düzenleme Paneli </h4>
                 <form class="forms-sample">
                     @Html.HiddenFor(x => x.PortfolioID)
                     <br />
@@ -20,17 +20,27 @@
                     <br />
                     @Html.Label("Proje Hakkında Bilgi")
                     @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.Name)
+                    @Html.ValidationMessageFor(x => x.Description)
                      <br />
-                    <label>Görsel 1</label>
-                    @Html.ValidationMessageFor(x => x.ImageUrl)
-                    <br />
-                    <label>Görsel 1</label>
-                    @Html.TextBoxFor(x => x.ImageUrl, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.ProjectUrl)
+                    
+                        <label>Görsel </label>
+                        <input asp-for="ImageUrl"  class="form-control" onchange="loadFile(event)"/>
+                         @Html.ValidationMessageFor(x => x.Description)
+                            <input type="file" accept="image/*" name="picture" onchange="loadFile(event)">
+                            <img id="output" width="100px" height="100px" src="@Model.ImageUrl"/>
+                            <script>
+                             var loadFile = function(event) {
+                             var output = document.getElementById('output');
+                               output.src = URL.createObjectURL(event.target.files[0]);
+                                output.onload = function() {
+                                URL.revokeObjectURL(output.src) // free memory
+                                 }
+                                 };
+                             </script>
+                        
                     <br />
                     @*<button class="btn btn-info">Kaydet</button>*@
-                    <a asp-action="Index" asp-controller="Portfolio" class="btn btn-dark">Kaydet</a>
+                    <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
                     <a asp-action="Index" asp-controller="Portfolio" class="btn btn-dark">İptal</a>
                 </form>
             }

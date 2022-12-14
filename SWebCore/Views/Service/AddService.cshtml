@@ -10,13 +10,13 @@
             @using (Html.BeginForm("AddService", "Service", null, FormMethod.Post, false, new { enctype = "multipart/form-data", @class = "forms-sample" }))
             {
 
-                <p class="card-description"> Hizmet Ekleme Paneli </p>
+                <h4 class="card-title"> Hizmet Ekleme Paneli </h4>
                 <form id="addService" class="forms-sample">
                     <br />
                     @Html.Label("Hizmet Başlığı")
                     @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
                     <br />
-                    <label>Resim Yolu</label>
+                    <label>Resim </label>
                     <input type="file" name="picture" />
                     @foreach (var item in ViewBag.Images as List<string>)
                     {

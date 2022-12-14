@@ -1,5 +1,5 @@
 ﻿@using EntityLayer.Concrete
-@model List<About>
+@model List<AboutVM>
 
 
 <div class="section pt-4 px-3 px-lg-4" id="about">
@@ -16,11 +16,7 @@
                         </div>
                         <div class="col-sm-10">
                             <div class="pb-1 fw-bolder">
-                               @{
-                                    int yas = (DateTime.Now - item.Age).Value.Days / 365;
-
-                                }
-                                @Html.Raw(yas.ToString())
+                               @item.AgeCalculate()
                             </div>
                         </div>
                         <div class="col-sm-2">

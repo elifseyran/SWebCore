@@ -40,7 +40,6 @@ namespace SWebCore.Controllers
             ValidationResult results = validations.Validate(p);
             if (results.IsValid) //results geerli ise sen çalış
             {
-               
                 portfolioManager.TAdd(p);
                 return RedirectToAction("Index");
             }
@@ -53,6 +52,44 @@ namespace SWebCore.Controllers
             }
             return View(p);
         }
+        [HttpGet]
+        public IActionResult EditPortfolio(int id)
+        {
+
+            var values = portfolioManager.TGetByID(id);
+            return View(values);
+
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditPortfolio(Portfolio portfolio, [Bind("picture")] IFormFile picture)
+        {
+            
+            PortfolioValidator validations = new PortfolioValidator();
+            ValidationResult results = validations.Validate(portfolio);
+            if (results.IsValid)
+            {
+                string path = portfolio.ImageUrl;
+                if (picture != null)
+                {
+                    path = await AddAsync(picture);
+                }
+                portfolio.ImageUrl = path;
+                portfolioManager.TUpdate(portfolio);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View(portfolio);
+        }
+
+
+
         [NonAction]
         public async Task<string> AddAsync(IFormFile file)
         {
@@ -81,7 +118,7 @@ namespace SWebCore.Controllers
                         filePath = $"/images/{filePath}";
                     }
                 }
-                else { ModelState.AddModelError("item.ImageuRL", "This is not a valid date"); }
+                else { ModelState.AddModelError("item.ImageuRL", "Bu geçerli bir tarih değil"); }
             }
             return filePath;
         }
@@ -92,30 +129,27 @@ namespace SWebCore.Controllers
             portfolioManager.TDelete(values);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public IActionResult EditPortfolio(int id)
-        {
-            var values = portfolioManager.TGetByID(id);
-            return View(values);
-        }
-        [HttpPost]
-        public IActionResult EditPortfolio(Portfolio portfolio)
-        {
-            PortfolioValidator validations = new PortfolioValidator();
-            ValidationResult results = validations.Validate(portfolio);
-            if (results.IsValid)
-            {
-                portfolioManager.TUpdate(portfolio);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-            }
-            return View();
-        }
+
+        //[HttpPost]
+        //public IActionResult EditPortfolio(Portfolio portfolio)
+        //{
+        //    PortfolioValidator validations = new PortfolioValidator();
+        //    ValidationResult results = validations.Validate(portfolio);
+        //    if (results.IsValid)
+        //    {
+        //        portfolioManager.TUpdate(portfolio);
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        foreach (var item in results.Errors)
+        //        {
+        //            ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+        //        }
+        //    }
+        //    return View();
+        //}
+
+
     }
 }

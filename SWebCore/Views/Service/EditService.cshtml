@@ -7,12 +7,12 @@
     <div class="card">
         <div class="card-body">
             <div class="card-header border-0">
-                <h3 class="mb-0">Hizmet Düzenleme Sayfası</h3>
+                <h4 class="card-title">Hizmet Düzenleme Sayfası</h4>
             </div>
             @using (Html.BeginForm("EditService", "Service", FormMethod.Post))
             {
 
-                <p class="card-description">Hizmet Ekleme Paneli </p>
+                
                 <form class="forms-sample">
                     @Html.HiddenFor(x => x.ServiceID)
                     <br />
@@ -20,11 +20,11 @@
                     @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
                     <br />
                     <label>Resim Yolu</label>
-                    @Html.TextBoxFor(x => x.ImageUrl, new { @class = "form-control" })
+                    <input type="file" name="picture" />
                     <br />
                     <button class="btn btn-outline-success">Güncelle</button>
                     @*<a asp-action="Index" asp-controller="Service" class="btn btn-outline-dark">Güncelle</a>*@
-                    <a asp-action="Index" asp-controller="Service" class="btn btn-outline-dark">İptal</a>
+                    <a asp-action="Index" asp-controller="Service" class="btn btn-outline-success">İptal</a>
                 </form>
 
             }

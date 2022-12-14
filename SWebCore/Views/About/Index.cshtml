@@ -7,12 +7,13 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
+            
             @using (Html.BeginForm("Index", "About", null, FormMethod.Post, false, new { enctype = "multipart/form-data", @class = "forms-sample" }))
             {
+                <div asp-validation-summary="ModelOnly"></div>
+                <h4 class="card-title">Hakkımda Düzenleme Paneli</h4>
 
-                <p class="card-description"> Hakkımda Düzenleme Paneli </p>
-
-                <div class="form-group">
+                <div class="form-group" style="display: none;" >
                     <label>ID</label>
                     @Html.TextBoxFor(x => x.AboutID, new { @class = "form-control" })
                 </div>
@@ -39,9 +40,23 @@
                 </div>
                 <div class="form-group">
                     <label>Görsel URL</label>
-                    <input type="file" name="picture" />
-                </div>
+                   @*<input type="file" name="picture" />*@
+                   <input asp-for="ImageUrl"  class="form-control" onchange="loadFile(event)"/>
+                   
+                    <input type="file" accept="image/*" name="picture" onchange="loadFile(event)">
 
+                    <img id="output" width="100px" height="100px" src="@Model.ImageUrl"/>
+                        <script>
+                         var loadFile = function(event) {
+                         var output = document.getElementById('output');
+                         output.src = URL.createObjectURL(event.target.files[0]);
+                         output.onload = function() {
+                         URL.revokeObjectURL(output.src) // free memory
+                         }
+                         };
+                        </script>        
+                </div>
+ 
                 <div class="form-group">
                     <label>Açıklama</label>
                     @Html.TextAreaFor(x => x.Description, 6, 3, new { @class = "form-control" })

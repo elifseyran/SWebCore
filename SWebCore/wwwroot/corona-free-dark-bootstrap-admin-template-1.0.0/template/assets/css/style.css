@@ -7497,7 +7497,9 @@ body {
   line-height: 1.5;
   color: #ffffff;
   text-align: left;
-  background-color: #fff; }
+  background-color: #fff; 
+}
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }

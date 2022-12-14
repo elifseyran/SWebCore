@@ -21,7 +21,7 @@ namespace SWebCore.Controllers
         public IActionResult Index(Feature feature)
         {
             featureManager.TUpdate(feature);
-            return RedirectToAction("Index","DefaultController1");//default içindeki index yonlendirecek
+            return RedirectToAction("Index","Feature");//default içindeki index yonlendirecek
         }
     }
 }

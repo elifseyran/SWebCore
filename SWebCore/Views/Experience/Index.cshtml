@@ -5,13 +5,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
 }
-
+<link rel="stylesheet" href="~/css/site.css">
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Deneyimler</h4>
             <div class="table-responsive">
-                <table class="table">
+                <table id="test" class="table">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -42,7 +42,7 @@
                                @* <td>@item.StartingDate</td>
                                 <td>@item.EndDate</td>*@
                                 <td>@item.CompanySector</td>
-                                <td>@item.BusinessArea</td>
+                                <td class="ellipsis">@item.BusinessArea</td>
                                 <td><a href="/Experience/DeleteExperience/@item.ExperienceID" class="btn btn-outline-danger">Sil</a></td>
                                 <td><a href="/Experience/EditExperience/@item.ExperienceID" class="btn btn-outline-success">Güncelle</a></td>
                             </tr>

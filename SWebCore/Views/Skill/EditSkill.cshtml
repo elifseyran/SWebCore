@@ -4,9 +4,6 @@
     Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
 }
 
-<div class="card-header border-0 col-12">
-    <h3 class="mb-0">Yetenek Düzenleme Sayfası</h3>
-</div>
 
 <div class="col-12">
     @using (Html.BeginForm("EditSkill", "Skill", FormMethod.Post))
@@ -16,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <p class="card-description">Yetenek Düzenleme Paneli </p>
+                    <h4 class="card-title">Yetenek Düzenleme Paneli </h4>
                     <form class="forms-sample">
                         <div class="form-group">
                             <label>ID</label>
@@ -31,7 +28,7 @@
                             @Html.TextBoxFor(x=>x.Value, new{@class="form-control"})
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
-                        <button class="btn btn-dark">İptal</button>
+                        <button class="btn btn-primary mr-2">İptal</button>
                     </form>
                 </div>
             </div>
